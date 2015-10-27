@@ -1,6 +1,6 @@
-/* global angular, rerum */
+/* global angular, metascripta */
 
-rerum.config(['$routeProvider',
+metascripta.config(['$routeProvider',
     function ($routeProvider, $locationProvider, Edition) {
         $routeProvider
             .when('/edit', {
@@ -32,14 +32,14 @@ rerum.config(['$routeProvider',
             });
     }]);
 
-rerum.service('Context', function ($http, $q) {
+metascripta.service('Context', function ($http, $q) {
     var self = this;
     var url = 'http://iiif.io/api/presentation/2/context.json';
     this.getJSON = $http.get(url, {cache: true}).success(function (c) {
         self.json = c['@context'][0];
     });
 });
-rerum.value('Knowns',{
+metascripta.value('Knowns',{
     obj : {
 //        "@id": "",
         "@context": "http://iiif.io/api/presentation/2/context.json",
@@ -159,7 +159,7 @@ rerum.value('Knowns',{
     }
 });
 
-rerum.service('RERUM', function($http,$q){
+metascripta.service('metascripta', function($http,$q){
     var self = this;
     this.resolve = function(uri){
         if(angular.isArray(uri)){
@@ -181,7 +181,7 @@ rerum.service('RERUM', function($http,$q){
     };
 });
 
-rerum.controller('buildManifestController', function ($scope, $modal, Context, Knowns, RERUM, obj) {
+metascripta.controller('buildManifestController', function ($scope, $modal, Context, Knowns, metascripta, obj) {
     Context.getJSON.success(function (c) {
         $scope.context = c['@context'][0];
     });
@@ -288,10 +288,10 @@ rerum.controller('buildManifestController', function ($scope, $modal, Context, K
             });
     };
 
-    $scope.saveManifest = RERUM.save;
+    $scope.saveManifest = metascripta.save;
 });
 
-rerum.directive('ngLoad', function($parse){
+metascripta.directive('ngLoad', function($parse){
         return {
             restrict: 'A',
             compile: function($element, attr) {
@@ -311,7 +311,7 @@ rerum.directive('ngLoad', function($parse){
     });
 
 
-rerum.directive('addProperty',function(){
+metascripta.directive('addProperty',function(){
     return {
         restrict: 'E',
         templateUrl:'app/tools/addProperty.html',
@@ -335,7 +335,7 @@ rerum.directive('addProperty',function(){
         }
     };
 });
-rerum.directive('property', function ($compile) {
+metascripta.directive('property', function ($compile) {
     var getTemplate = function (type, insert) {
         var tmpl = ['<div class="form-group">'
                 + '<label class="{{labelClass}}" title="{{context[is][\'@id\']||context[is]}}"><span ng-show="context[is]">'

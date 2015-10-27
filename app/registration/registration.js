@@ -1,4 +1,4 @@
-rerum.controller('registrationController', function ($scope, RegistrationService) {
+metascripta.controller('registrationController', function ($scope, RegistrationService) {
     $scope.submitRegistration = function (form) {
         RegistrationService.register(form)
             .then(function (data) {
@@ -9,7 +9,7 @@ rerum.controller('registrationController', function ($scope, RegistrationService
     };
 });
 
-rerum.service('RegistrationService', function ($http, $q) {
+metascripta.service('RegistrationService', function ($http, $q) {
     this.register = function (form) {
         var reg = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
         if (reg.test(form.ip)) {

@@ -1,0 +1,97 @@
+<form>
+    <a class='btn btn-default pull-right' href='#/data'>
+        Return to Search <i class='fa fa-search'></i>
+    </a>
+    <h3>
+        {{show.currentManuscript.collection}} {{show.currentManuscript.codex}}
+        <br>
+        <small ng-show='show.currentManuscript.city'>{{show.currentManuscript.city}}, {{show.currentManuscript.repository}}</small>
+    </h3>
+    <div class="well clearfix">
+        <a class='btn btn-primary pull-right' type='button'
+           ng-hide='show.currentManuscript.id'
+                ng-click='saveRecord(show.currentManuscript)'
+                href="#/data">
+            <i class='fa fa-save'></i> Save Record
+        </a>
+        <h4>Basic Metadata</h4>
+        <div class="form-group col-sm-6">
+            <label>Collection</label>
+            <select ng-options="prefix for prefix in prefixes"
+                    class="form-control" required
+                    ng-model="show.currentManuscript.collection"></select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Codex Number</label>
+            <input ng-model="show.currentManuscript.codex" type="text" class="form-control" required>
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Country</label>
+            <select ng-options='c for c in countries'
+                    ng-model="show.currentManuscript.country"
+                    class="form-control"></select>
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Language</label>
+            <select ng-options='l for l in languages'
+                    ng-model="show.currentManuscript.language"
+                    class="form-control"></select>
+        </div>
+        <div class="form-group col-sm-4">
+            <label>Century</label>
+            <select ng-options="c as ((c/100-1)+'th century ('+c+'-'+(c+99)+')') for c in centuries"
+                    class="form-control" required
+                    ng-model="show.currentManuscript.century"></select>
+        </div>
+        <div class="form-group col-xs-4">
+            <button class="btn btn-default btn-xs"
+                    ng-click="addValue(countries, 'Add country:')">
+                <i class="fa fa-plus"></i> add country
+            </button>
+        </div>
+        <div class="form-group col-xs-4">
+            <button class="btn btn-default btn-xs"
+                    ng-click="addValue(languages, 'Add language:')">
+                <i class="fa fa-plus"></i> add language
+            </button>
+        </div>
+    </div>
+    <div class="well clearfix">
+        <h4>Image Information</h4>
+        <div ng-repeat="i in show.currentManuscript.images" class="clearfix">
+            <div class="form-group col-sm-6">
+                <label>Images ({{i.urlString.split(',').length || 'none stored'}})
+                    <button ng-click="show.currentManuscript.images.splice($index, 1)" type="button" class="btn btn-default btn-xs">
+                        <i class="fa fa-trash"></i> Remove Imageset
+                    </button>
+                </label>
+                <textarea ng-model="i.urlString" type="text"
+                          class="form-control" required></textarea>
+                <span class="help-block">
+                    Enter a comma separated list of image URLs.
+                </span>
+            </div>
+            <div class="form-group col-sm-6">
+                <label>Source (Roll Number)</label>
+                <span class="input-group" ng-repeat="roll in i.rollNumber">
+                    <input ng-model="i.rollNumber[$index]" type="number"
+                           ng-model-options="{updateOn:'blur'}"
+
+                           min="1"
+                           class="form-control" required>
+                    <span class="input-group-btn">
+                        <button ng-click="i.rollNumber.splice($index, 1)" type="button" class="btn btn-default">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </span>
+                </span>
+                <button type="button" class="btn btn-default"
+                        ng-click="i.rollNumber.push('undefined')"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+        <button class="btn btn-default"
+                ng-click="show.currentManuscript.images.push({urlString: '', rollNumber: []})">
+            <i class="fa fa-plus"></i> add an imageset
+        </button>
+    </div>
+</form>

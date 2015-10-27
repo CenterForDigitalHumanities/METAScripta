@@ -1,17 +1,36 @@
-var rerum = angular.module('rerum', ['ui.bootstrap', 'ngRoute', 'angular-loading-bar', 'cfp.hotkeys']);
-rerum.config(['$routeProvider', '$locationProvider',
+var metascripta = angular.module('metascripta', ['ui.bootstrap', 'ngRoute', 'angular-loading-bar', 'cfp.hotkeys', 'utils']);
+metascripta.config(['$routeProvider', '$locationProvider',
     function ($routeProvider, $locationProvider) {
 //            $locationProvider.html5Mode(true);
-            $routeProvider
-                .when('/welcome', {
-                    templateUrl: 'app/welcome.html'
-                })
+        $routeProvider
+            .when('/welcome', {
+                templateUrl: 'app/welcome.html',
+                controller: 'welcomeController'
+            })
+            .when('/data/:msid', {
+                templateUrl: 'app/dataEntry/dataDetail.html',
+                controller: 'dataController',
+                resolve: {
+                    msid: function ($route) {
+                        return $route.current.params.msid;
+                    }
+                }
+            })
+            .when('/data', {
+                templateUrl: 'app/dataEntry/data.html',
+                controller: 'dataController',
+                resolve: {
+                    msid: function () {
+                        return false;
+                    }
+                }
+            })
             .when('/about', {
                 templateUrl: 'app/about/about.html'
             })
             .otherwise(({redirectTo: '/welcome'}));
     }]);
-rerum.controller('mainController', function ($scope, $location, hotkeys) {
+metascripta.controller('mainController', function ($scope, $location, hotkeys) {
     // welcome functions
     hotkeys.add({
         combo: 'home',
@@ -43,7 +62,8 @@ rerum.controller('mainController', function ($scope, $location, hotkeys) {
         }
 //        angular.element(elem).addClass('focused');
         return elem;
-    };
+    }
+    ;
     /**
      * Convert strings like cmd into symbols like ⌘
      * @param  {String} combo Key combination, e.g. 'mod+f'
@@ -58,7 +78,8 @@ rerum.controller('mainController', function ($scope, $location, hotkeys) {
             up: '↑',
             down: '↓',
             'return': '↩',
-            backspace: '⌫'
+            backspace: '⌫',
+            home: '⌂'
         };
         for (var i = 0; i < combo.length; i++) {
             // try to resolve command / ctrl based on OS:
@@ -73,38 +94,6 @@ rerum.controller('mainController', function ($scope, $location, hotkeys) {
         }
         return combo.join(' + ');
     };
-    hotkeys.add({
-        combo: 'T',
-        description: 'Term',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            $scope.terminal = !$scope.terminal;
-        }
-    });
-    hotkeys.add({
-        combo: 'down',
-        description: 'Next',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            tabTo(1).focus();
-        }
-    });
-    hotkeys.add({
-        combo: 'up',
-        description: 'Previous',
-        allowIn: ['INPUT', 'SELECT', 'TEXTAREA'],
-        callback: function () {
-            tabTo(-1).focus();
-        }
-    });
 });
-rerum.controller('welcomeController', function ($scope, $location, hotkeys) {
-    hotkeys.bindTo($scope)
-        .add({
-            combo: '5',
-            description: 'About us / Contact',
-            callback: function () {
-                $location.path('/about');
-            }
-        });
+metascripta.controller('welcomeController', function ($scope, $location, hotkeys) {
 });

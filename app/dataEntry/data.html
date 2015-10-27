@@ -1,0 +1,42 @@
+<div>
+    <div class="well clearfix">
+        <div class="form-group col-sm-6">
+            <label>Select Prefix</label>
+            <select ng-options="prefix for prefix in prefixes"
+                    ng-model-options="searchConfig"
+                    class="form-control"
+                    ng-change="updateFilter()"
+                    ng-model="search.collection"></select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label>Filter Manuscripts</label>
+            <input ng-model="search.codex" ng-model-options="searchConfig" type="text" class="form-control"
+                   ng-change="updateFilter()">
+        </div>
+        <p class="help-block">Search for a manuscript to add indexing metadata or images.</p>
+        <span class="help-block" ng-show="filtered">{{filtered.length}} {{filtered.length === 1 && "result"||"results"}}
+            <a class="btn btn-default" ng-click="show.list = !show.list" ng-if="filtered && filtered.length > 99">
+                {{show.list && 'Hide'|| 'Reveal'}} Long List
+            </a>
+        </span>
+        <a class="btn btn-default" href='#/data/new'>
+            <i class="fa fa-plus-square-o"></i> Create New Record
+        </a>
+    </div>
+    <div class="results" ng-if="filtered && show.list || filtered.length < 100">
+        <a class="btn-block btn-default" href="#/data/{{m.id}}" ng-repeat="m in filtered"
+           ng-class="{'single-result':filtered.length === 1}">
+            {{m.collection + " " + m.codex}}
+            <div ng-if="filtered.length === 1">
+                <dl class="dl-horizontal">
+                    <dt ng-repeat-start="(k,v) in filtered[0]">
+                    {{k}}
+                    </dt>
+                    <dd ng-repeat-end>
+                        {{v}}
+                    </dd>
+                </dl>
+            </div>
+        </a>
+    </div>
+</div>

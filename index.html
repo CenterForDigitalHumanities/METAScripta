@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="body" ng-app="rerum">
+<html class="body" ng-app="metascripta">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>METAScripta</title>
@@ -8,24 +8,23 @@
         <!--        <link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">-->
         <link rel="stylesheet" href="app/lib/loading-bar.css" media="screen">
         <link rel="stylesheet" href="app/lib/hotkeys.min.css" media="screen">
-        <link rel="stylesheet" href="assets/fonts.css" media="screen">
+        <link rel="stylesheet" href="app/lib/animate.css" media="screen">
         <link rel="stylesheet" href="app/app.css" media="screen">
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
-        <!--        <base href="rerum/">-->
+        <!--        <base href="metascripta/">-->
     </head>
     <body class="container" ng-controller="mainController">
         <header>
-            <h1 ng-if="!terminal">RERUM</h1>
-            <small>reconditorium eximium rerum universalium mutabiliumque</small>
+            <img class="center-block" src="assets/METAscripta.png" />
         </header>
     <ng-view></ng-view>
     <footer>
-        <span ng-if="terminal">
+        <span>
             <a ng-repeat="hotkey in hotkeys.get()" ng-hide="hotkey.combo[0]==='?'"
-           ng-click="hotkey.callback($event)">
-            <span class="btn-invert">{{symbolize(hotkey.combo)}}</span>
-            {{hotkey.description}}</a>
+               ng-click="hotkey.callback($event)">
+                <kbd>{{symbolize(hotkey.combo)}}</kbd>
+                {{hotkey.description}}</a>
         </span>
         <a class="btn-block text-center" href='mailto:digitalhumanities@slu.edu'
            tabindex="-1">
@@ -41,5 +40,8 @@
     <script type="text/javascript" src="app/app.js"></script>
     <script type="text/javascript" src="app/registration/registration.js"></script>
     <script type="text/javascript" src="app/tools/manifest.js"></script>
+    <script type="text/javascript" src="app/lib/utils.js"></script>
+    <script type="text/javascript" src="app/dataEntry/data.js"></script>
+    <script type="text/javascript" src="app/dataEntry/manuscripts.js"></script>
 </body>
 </html>
