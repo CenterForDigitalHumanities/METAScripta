@@ -42,6 +42,7 @@
                 ng-click="search.collection = false;
                             search.codex = false;
                             search.roll = false;
+                            strict = false;
                             updateFilter()">
             <i class="fa fa-undo"></i>
             Clear Values
@@ -64,7 +65,9 @@
                 </dt>
                 <dd ng-repeat-end>
                     {{v}}
-                    <a ng-if="k==='oclc'" ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">lookup</a>
+                    <a ng-if="k==='oclc' && v"
+                       target="_blank"
+                       ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">lookup</a>
                 </dd>
             </dl>
         </div>
