@@ -1,42 +1,77 @@
 <div>
     <div class="well clearfix">
-        <div class="form-group col-sm-6">
-            <label>Select Prefix</label>
-            <select ng-options="prefix for prefix in prefixes"
-                    ng-model-options="searchConfig"
-                    class="form-control"
-                    ng-change="updateFilter()"
-                    ng-model="search.collection"></select>
-        </div>
-        <div class="form-group col-sm-6">
-            <label>Filter Manuscripts</label>
-            <input ng-model="search.codex" ng-model-options="searchConfig" type="text" class="form-control"
-                   ng-change="updateFilter()">
-        </div>
-        <p class="help-block">Search for a manuscript to add indexing metadata or images.</p>
-        <span class="help-block" ng-show="filtered">{{filtered.length}} {{filtered.length === 1 && "result"||"results"}}
-            <a class="btn btn-default" ng-click="show.list = !show.list" ng-if="filtered && filtered.length > 99">
-                {{show.list && 'Hide'|| 'Reveal'}} Long List
-            </a>
-        </span>
-        <a class="btn btn-default" href='#/data/new'>
-            <i class="fa fa-plus-square-o"></i> Create New Record
-        </a>
-    </div>
-    <div class="results" ng-if="filtered && show.list || filtered.length < 100">
-        <a class="btn-block btn-default" href="#/data/{{m.id}}" ng-repeat="m in filtered"
-           ng-class="{'single-result':filtered.length === 1}">
-            {{m.collection + " " + m.codex}}
-            <div ng-if="filtered.length === 1">
-                <dl class="dl-horizontal">
-                    <dt ng-repeat-start="(k,v) in filtered[0]">
-                    {{k}}
-                    </dt>
-                    <dd ng-repeat-end>
-                        {{v}}
-                    </dd>
-                </dl>
+        <div class="col-md-6">
+            <h4>By Shelfmark</h4>
+            <div class="form-group">
+                <label>Select Fondo</label>
+                <select ng-options="prefix for prefix in prefixes"
+                        ng-model-options="searchConfig"
+                        class="form-control"
+                        ng-change="updateFilter(strict)"
+                        ng-model="search.collection"></select>
             </div>
-        </a>
+            <div class="form-group">
+                <label>Filter Identifier</label>
+                <input ng-model="search.codex" ng-model-options="searchConfig" type="text" class="form-control"
+                       ng-change="updateFilter(strict)">
+                <input type="checkbox" ng-model="strict" ng-change="updateFilter(strict)"> Exact
+            </div>
+            <p class="help-block">Search for a manuscript to add indexing metadata or images.</p>
+            <a class="btn btn-default" href='#/data/new' ng-if="user.isAdmin">
+                <i class="fa fa-plus-square-o"></i> New Manuscript Record
+            </a>
+        </div>
+        <div class="col-md-6">
+            <h4>By Film Roll Number</h4>
+            <div class="form-group">
+                <label>Filter Rolls by Number</label>
+                <input ng-model="search.roll" ng-model-options="searchConfig" type="text" class="form-control"
+                       ng-change="updateFilter()">
+            </div>
+        </div>
     </div>
+    <p class="help-block" ng-show="filtered">
+        <i class="fa fa-search"></i>
+        Search for <em>{{search.collection|| "*"}}
+            {{search.codex && (strict && search.codex || "*" + search.codex + "*") || "*"}}</em>
+        {{search.roll && "on roll " + search.roll}} yields {{filtered.length}} {{filtered.length === 1 && "result"||"results"}}.
+        <button class="btn btn-default" ng-click="show.list = !show.list" ng-if="filtered && filtered.length > 30">
+            {{show.list && 'Hide'|| 'Reveal'}} Long List
+        </button>
+        <button class="btn btn-default"
+                ng-click="search.collection = false;
+                            search.codex = false;
+                            search.roll = false;
+                            updateFilter()">
+            <i class="fa fa-undo"></i>
+            Clear Values
+        </button>
+
+</div>
+<div class="results" ng-if="filtered && show.list || filtered.length < 31">
+    <div class="btn-default col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="m in filtered| limitTo : 250"
+         ng-click="search.collection = m.collection;
+                         search.codex = m.codex;
+                         search.roll = m.roll;
+                         updateFilter(true);"
+         ng-class="{'single-result':filtered.length === 1,btn:filtered.length > 1}">
+        <a class="btn btn-primary pull-right" ng-if="user.isAdmin" href="#/data/{{m.id}}">edit</a>
+        <div ng-class="{'lead':filtered.length === 1}">{{m.collection + " " + m.codex}}{{(m.part !== "1" && "(" + m.part + ")") || ""}}</div>
+        <div ng-if="filtered.length === 1">
+            <dl class="dl-horizontal">
+                <dt ng-repeat-start="(k,v) in filtered[0]">
+                {{k}}
+                </dt>
+                <dd ng-repeat-end>
+                    {{v}}
+                    <a ng-if="k==='oclc'" ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">lookup</a>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <alert type="warning" class="col-xs-12" ng-show="filtered.length > 250">
+        <i class="fa fa-info"></i>
+        List limited to first 250 records.
+    </alert>
+</div>
 </div>

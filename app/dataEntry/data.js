@@ -1,4 +1,4 @@
-/* global metascripta */
+/* global metascripta, angular */
 metascripta.controller('dataController', function ($location, $filter, $scope, Manuscripts, Lists, msid) {
     $scope.ms = Manuscripts;
     $scope.search = {};
@@ -21,8 +21,15 @@ metascripta.controller('dataController', function ($location, $filter, $scope, M
     $scope.prefixes = (function(){
         return Lists.getAllPropValues('collection', Manuscripts);
     })();
-    $scope.updateFilter=function(){
-        $scope.filtered = $filter('filter')(Manuscripts, $scope.search);
+    $scope.updateFilter = function (strict) {
+        angular.forEach($scope.search, function (v, k) {
+            if (!v)
+                delete $scope.search[k];
+        });
+        $scope.filtered = $filter('filter')(Manuscripts, $scope.search, strict);
+        if ($scope.search.roll) {
+            $scope.filtered = $filter('filter')($scope.filtered, {roll: $scope.search.roll}, true);
+        }
     };
     $scope.centuries = [400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800];
     $scope.countries = ["Germany", "Italy", "France", "England", "Spain", "Elbonia"];

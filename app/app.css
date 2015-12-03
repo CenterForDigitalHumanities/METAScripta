@@ -6,11 +6,6 @@ body {
     /* Margin bottom by footer height */
     margin-bottom: 160px;
 }
-div.results {
-    -webkit-columns: 300px;
-    -moz-columns: 300px;
-    columns: 300px;
-}
 figure img {
     max-width:100%;
     max-height: 100%;
@@ -26,19 +21,15 @@ figure img {
 .fadeInOut.ng-leave,.fadeInOut.ng-hide-add{
     animation: fadeOut .5s;
 }
+.result {
+    transition: all 250ms;
+}
 .single-result {
-    position: absolute;
-    width: 90%;
-    margin: 15px;
+    width: 100%;
     border: solid 2px #ada;
-    padding: 15px;
     background: #eee;
     border-radius: 5px;
     font-size: 1.68rem;
-}
-.single-result:hover {
-    background: #eFe;
-    text-decoration: none;
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 768px) {
