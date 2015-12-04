@@ -31,6 +31,15 @@ figure img {
     border-radius: 5px;
     font-size: 1.68rem;
 }
+.vertical-divider{
+    position:absolute;
+    height: 100%;
+    left:0;
+    top:0;
+    width:0;
+    border-left:solid 1px #ddd;
+    pointer-events: none;
+}
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 768px) {
     body.terminal{

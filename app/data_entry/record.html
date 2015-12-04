@@ -1,0 +1,30 @@
+<dl>
+    <span ng-if="m.repository || m.city">
+        <dt>Location</dt><dd>{{m.repository && m.repository + ', '}}{{m.city}}</dd>
+    </span>
+    <span ng-if="m.roll">
+        <dt>Roll Number</dt>
+        <dd>{{m.roll}}<span ng-if="allParts.length > 1">
+            <button ng-click="showParts()"
+                    class="btn btn-sm btn-default"
+                    title="This manuscript was filmed in multiple segments.">
+                Show all {{allParts.length}}
+            </button>
+    </dd>
+    </span>
+    <span ng-if="m.oclc && m.oclc > 0">
+        <dt>Library OCLC</dt>
+        <dd>
+        <a class="btn btn-default" target="_blank"
+           ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">
+            <i class="fa fa-external-link"></i>
+        </a>
+    </dd>
+    </span>
+            <button class="pull-left btn btn-xs btn-link" ng-click="showpre=!showpre" title="Decoded Record">
+                <i class="fa fa-code"></i>
+    </button>
+    <pre collapse="!showpre">
+                {{m|json}}
+    </pre>
+    </dl>

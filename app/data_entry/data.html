@@ -2,7 +2,7 @@
     <div class="well clearfix">
         <div class="col-md-6">
             <h4>By Shelfmark</h4>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label>Select Fondo</label>
                 <select ng-options="prefix for prefix in prefixes"
                         ng-model-options="searchConfig"
@@ -10,25 +10,26 @@
                         ng-change="updateFilter(strict)"
                         ng-model="search.collection"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-sm-6">
                 <label>Filter Identifier</label>
                 <input ng-model="search.codex" ng-model-options="searchConfig" type="text" class="form-control"
                        ng-change="updateFilter(strict)">
                 <input type="checkbox" ng-model="strict" ng-change="updateFilter(strict)"> Exact
             </div>
-            <p class="help-block">Search for a manuscript to add indexing metadata or images.</p>
             <a class="btn btn-default" href='#/data/new' ng-if="user.isAdmin">
                 <i class="fa fa-plus-square-o"></i> New Manuscript Record
             </a>
         </div>
         <div class="col-md-6">
+            <div class="vertical-divider hidden-xs hidden-sm"></div>
             <h4>By Film Roll Number</h4>
-            <div class="form-group">
+            <div class="form-group col-xs-12">
                 <label>Filter Rolls by Number</label>
                 <input ng-model="search.roll" ng-model-options="searchConfig" type="text" class="form-control"
                        ng-change="updateFilter()">
             </div>
         </div>
+        <p class="help-block col-xs-12">Search for a VFL manuscript by shelfmark or roll number.</p>
     </div>
     <p class="help-block" ng-show="filtered">
         <i class="fa fa-search"></i>
@@ -47,34 +48,29 @@
             <i class="fa fa-undo"></i>
             Clear Values
         </button>
-
-</div>
-<div class="results" ng-if="filtered && show.list || filtered.length < 31">
-    <div class="btn-default col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="m in filtered| limitTo : 250"
-         ng-click="search.collection = m.collection;
-                         search.codex = m.codex;
-                         search.roll = m.roll;
-                         updateFilter(true);"
-         ng-class="{'single-result':filtered.length === 1,btn:filtered.length > 1}">
-        <a class="btn btn-primary pull-right" ng-if="user.isAdmin" href="#/data/{{m.id}}">edit</a>
-        <div ng-class="{'lead':filtered.length === 1}">{{m.collection + " " + m.codex}}{{(m.part !== "1" && "(" + m.part + ")") || ""}}</div>
-        <div ng-if="filtered.length === 1">
-            <dl class="dl-horizontal">
-                <dt ng-repeat-start="(k,v) in filtered[0]">
-                {{k}}
-                </dt>
-                <dd ng-repeat-end>
-                    {{v}}
-                    <a ng-if="k==='oclc' && v"
-                       target="_blank"
-                       ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">lookup</a>
-                </dd>
-            </dl>
+    <div class="results" ng-if="filtered && show.list || filtered.length < 31">
+        <div class="btn-default col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="m in filtered| limitTo : 250"
+             ng-click="search.collection = m.collection;
+                             search.codex = m.codex;
+                             search.roll = m.roll;
+                             updateFilter(true);"
+             ng-class="{'single-result':filtered.length === 1,btn:filtered.length > 1}">
+            <a class="btn btn-primary pull-right" ng-if="user.isAdmin" href="#/data/{{m.id}}">edit</a>
+            <div ng-class="{'lead':filtered.length === 1}">{{m.collection + " " + m.codex}}{{(m.part !== "1" && "(" + m.part + ")") || ""}}</div>
+            <div ng-if="filtered.length === 1" ng-controller="recordController">
+                <record class="dl-horizontal col-sm-8 col-md-7 col-lg-6"></record>
+                <div class="col-sm-4 col-md-5 col-lg-6">
+                    <small class="help-block" ng-hide="imgSrc">
+                        This manuscript has not been digitized yet.
+                    </small>
+                    <img ng-src="{{imgSrc}}" width="100%">
+                    <a ng-href="{{BAVMSlink(m)}}" target="_blank" ng-show="imgSrc">View at the BAV</a>
+                </div>
+            </div>
         </div>
+        <alert type="warning" class="col-xs-12" ng-show="filtered.length > 250">
+            <i class="fa fa-info"></i>
+            List limited to first 250 records.
+        </alert>
     </div>
-    <alert type="warning" class="col-xs-12" ng-show="filtered.length > 250">
-        <i class="fa fa-info"></i>
-        List limited to first 250 records.
-    </alert>
-</div>
 </div>

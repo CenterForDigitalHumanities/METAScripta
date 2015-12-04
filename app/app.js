@@ -8,7 +8,7 @@ metascripta.config(['$routeProvider', '$locationProvider',
                 controller: 'welcomeController'
             })
             .when('/data/:msid', {
-                templateUrl: 'app/dataEntry/dataDetail.html',
+                templateUrl: 'app/data_entry/dataDetail.html',
                 controller: 'dataController',
                 resolve: {
                     msid: function ($route) {
@@ -17,7 +17,7 @@ metascripta.config(['$routeProvider', '$locationProvider',
                 }
             })
             .when('/data', {
-                templateUrl: 'app/dataEntry/data.html',
+                templateUrl: 'app/data_entry/data.html',
                 controller: 'dataController',
                 resolve: {
                     msid: function () {
