@@ -2,7 +2,7 @@
     <div class="well clearfix">
         <div class="col-md-6">
             <h4>By Shelfmark</h4>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6 clearfix">
                 <label>Select Fondo</label>
                 <select ng-options="prefix for prefix in prefixes"
                         ng-model-options="searchConfig"
@@ -10,7 +10,7 @@
                         ng-change="updateFilter(strict)"
                         ng-model="search.collection"></select>
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-sm-6 clearfix">
                 <label>Filter Identifier</label>
                 <input ng-model="search.codex" ng-model-options="searchConfig" type="text" class="form-control"
                        ng-change="updateFilter(strict)">
@@ -23,7 +23,7 @@
         <div class="col-md-6">
             <div class="vertical-divider hidden-xs hidden-sm"></div>
             <h4>By Film Roll Number</h4>
-            <div class="form-group col-xs-12">
+            <div class="form-group col-xs-12 clearfix">
                 <label>Filter Rolls by Number</label>
                 <input ng-model="search.roll" ng-model-options="searchConfig" type="text" class="form-control"
                        ng-change="updateFilter()">
