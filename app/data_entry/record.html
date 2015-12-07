@@ -13,10 +13,10 @@
     </dd>
     </span>
     <span ng-if="m.oclc && m.oclc > 0">
-        <dt>Library OCLC</dt>
+        <dt>SLU OCLC</dt>
         <dd>
         <a class="btn btn-default" target="_blank"
-           ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{v}}&searchscope=5&submit=search&SORT=D">
+           ng-href="http://libcat.slu.edu/search/Y?searchtype=o&searcharg={{m.oclc}}&searchscope=5&submit=search&SORT=D">
             <i class="fa fa-external-link"></i>
         </a>
     </dd>
