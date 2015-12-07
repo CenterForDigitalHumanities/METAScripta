@@ -16,7 +16,7 @@ metascripta.config(['$routeProvider', '$locationProvider',
                     }
                 }
             })
-            .when('/data', {
+            .when('/search', {
                 templateUrl: 'app/data_entry/data.html',
                 controller: 'dataController',
                 resolve: {

@@ -29,7 +29,7 @@
                        ng-change="updateFilter()">
             </div>
         </div>
-        <p class="help-block col-xs-12">Search for a VFL manuscript by shelfmark or roll number.
+        <p class="help-block col-xs-12">
             <button class="btn btn-default" ng-show="filtered"
                     ng-click="search.collection = false;
                             search.codex = false;
@@ -39,6 +39,7 @@
                 <i class="fa fa-undo"></i>
                 Clear Values
             </button>
+            Search for a VFL manuscript by shelfmark or roll number.
         </p>
     </div>
     <p class="help-block" ng-show="filtered">
@@ -46,10 +47,10 @@
         Search for <em>{{search.collection|| "*"}}
             {{search.codex && (strict && search.codex || "*" + search.codex + "*") || "*"}}</em>
         {{search.roll && "on roll " + search.roll}} yields {{filtered.length}} {{filtered.length === 1 && "result"||"results"}}.
-        <button class="btn btn-default" ng-click="show.list = !show.list" ng-if="filtered && filtered.length > 30">
+        <button class="btn btn-default" ng-click="show.list = !show.list" ng-if="filtered && filtered.length > 60">
             {{show.list && 'Hide'|| 'Reveal'}} Long List
         </button>
-    <div class="results" ng-if="filtered && show.list || filtered.length < 31">
+    <div class="results" ng-if="filtered && show.list || filtered.length < 61">
         <div class="btn-default col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="m in filtered| limitTo : 250"
              ng-click="search.collection = m.collection;
                              search.codex = m.codex;
