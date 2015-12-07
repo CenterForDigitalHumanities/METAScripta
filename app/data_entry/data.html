@@ -30,19 +30,17 @@
             </div>
         </div>
         <p class="help-block col-xs-12">
-            <button class="btn btn-default" ng-show="filtered"
-                    ng-click="search.collection = false;
-                            search.codex = false;
-                            search.roll = false;
-                            strict = false;
-                            updateFilter()">
+            <button class="btn btn-default" ng-show="filtered.length"
+                    ng-click="search = {};
+                        filtered = [];
+                            strict = false;">
                 <i class="fa fa-undo"></i>
                 Clear Values
             </button>
             Search for a VFL manuscript by shelfmark or roll number.
         </p>
     </div>
-    <p class="help-block" ng-show="filtered">
+    <p class="help-block" ng-show="filtered.length">
         <i class="fa fa-search"></i>
         Search for <em>{{search.collection|| "*"}}
             {{search.codex && (strict && search.codex || "*" + search.codex + "*") || "*"}}</em>
