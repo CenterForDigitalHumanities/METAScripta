@@ -4,13 +4,9 @@
     </span>
     <span ng-if="m.roll">
         <dt>Roll Number</dt>
-        <dd>{{m.roll}}<span ng-if="allParts.length > 1">
-            <button ng-click="showParts()"
-                    class="btn btn-sm btn-default"
-                    title="This manuscript was filmed in multiple segments.">
-                Show all {{allParts.length}}
-            </button>
-    </dd>
+        <dd title="{{rolls.length>1 && 'This manuscript was filmed in multiple segments.' || ''}}">
+            {{rolls.join(', ')}}
+        </dd>
     </span>
     <span ng-if="m.oclc && m.oclc > 0">
         <dt>SLU OCLC</dt>

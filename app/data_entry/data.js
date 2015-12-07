@@ -67,13 +67,11 @@ metascripta.controller('recordController', function ($scope, $filter, dataServic
         });
     })();
     $scope.BAVMSlink = dataService.BAVMSlink;
-    $scope.allParts = (function () {
-        $scope.allParts = $filter('filter')(Manuscripts, {collection: $scope.m.collection, codex: $scope.m.codex}, true);
+    $scope.rolls = (function () {
+        return $filter('filter')(Manuscripts, {collection: $scope.m.collection, codex: $scope.m.codex}, true).map(function (m) {
+            return m.roll;
+        });
     })();
-    $scope.showParts = function () {
-        $scope.search = {collection: $scope.m.collection, codex: $scope.m.codex};
-        $scope.updateFilter(true);
-    };
 });
 
 metascripta.service('dataService', function ($q, $http) {

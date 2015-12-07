@@ -58,7 +58,7 @@
                              updateFilter(true);"
              ng-class="{'single-result':filtered.length === 1,btn:filtered.length > 1}">
             <a class="btn btn-primary pull-right" ng-if="user.isAdmin" href="#/data/{{m.id}}">edit</a>
-            <div ng-class="{'lead':filtered.length === 1}">{{m.collection + " " + m.codex}}{{(m.part !== "1" && "(" + m.part + ")") || ""}}</div>
+            <div ng-class="{'lead':filtered.length === 1}">{{m.collection + " " + m.codex}}</div>
             <div ng-if="filtered.length === 1" ng-controller="recordController">
                 <record class="dl-horizontal col-sm-8 col-md-7 col-lg-6"></record>
                 <div class="col-sm-4 col-md-5 col-lg-6">
