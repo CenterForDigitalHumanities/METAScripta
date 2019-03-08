@@ -88,7 +88,7 @@ metascripta.service('dataService', function ($q, $http) {
         if (thumbCache.hasOwnProperty(title)) {
             return thumbCache[title];
         }
-        var link = "http://digi.vatlib.it/diglitData/introimage/MSS_" + title + ".jpg";
+        var link = "https://digi.vatlib.it/diglitData/introimage/MSS_" + title + ".jpg";
         //        head is returning a 200, but the error is firing...
 //        return $http.head(link)
 //            .then(function () {
