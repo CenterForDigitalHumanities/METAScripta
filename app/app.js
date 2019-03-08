@@ -25,6 +25,15 @@ metascripta.config(['$routeProvider', '$locationProvider',
                     }
                 }
             })
+            .when('/test', {
+                templateUrl: 'app/test/test.html',
+                controller: 'testController',
+                resolve: {
+                    msid: function () {
+                        return false;
+                    }
+                }
+            })
             .when('/about', {
                 templateUrl: 'app/about/about.html'
             })
