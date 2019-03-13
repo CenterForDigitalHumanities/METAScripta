@@ -2,7 +2,7 @@
 metascripta.controller('testController', function ($filter,$q,$rootScope,$timeout, $controller, $scope, Manuscripts, Lists, dataService, msid) {
     $scope.ms = Manuscripts;
     $scope.testms = function(prefix) {
-        return Manuscripts.filter(ms=>ms.collection===prefix)
+        return Manuscripts.filter(ms=>ms.collection===prefix).sort(function(a,b){return parseInt(a.codex) > parseInt(b.codex) ? 1 : -1})
     }
     $scope.data = $controller('dataController',{msid:msid,$scope:$scope})
     $scope.getLink = function(event,ms) {

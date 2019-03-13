@@ -63,3 +63,6 @@ footer {
     padding: 15px;
     background-color: rgba(60,60,60,.85);
 }
+[ng-click] {
+    cursor: pointer;
+}
